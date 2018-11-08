@@ -12,13 +12,7 @@
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
-        <el-input
-          :type="pwdType"
-          v-model="loginForm.password"
-          name="password"
-          auto-complete="on"
-          placeholder="password"
-          @keyup.enter.native="handleLogin" />
+        <el-input :type='pwdType' v-model="loginForm.password" name="password" auto-complete="on" placeholder="password" @keyup.enter.native="handleLogin" />
         <span class="show-pwd" @click="showPwd">
           <svg-icon icon-class="eye" />
         </span>
@@ -74,7 +68,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         this.redirect = route.query && route.query.redirect;
       },
       immediate: true
@@ -130,6 +124,7 @@ $light_gray: #eee;
       color: $light_gray;
       height: 47px;
       &:-webkit-autofill {
+        box-shadow: 0 0 0px 1000px $bg inset !important;
         -webkit-box-shadow: 0 0 0px 1000px $bg inset !important;
         -webkit-text-fill-color: #fff !important;
       }
