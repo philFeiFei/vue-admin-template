@@ -32,11 +32,13 @@
 
 <script>
 import { isvalidUsername } from "@/utils/validate";
+import { Message } from 'element-ui'
 
 export default {
   name: "Login",
   data() {
     const validateUsername = (rule, value, callback) => {
+      console.log("enter validateUsername");
       if (!isvalidUsername(value)) {
         callback(new Error("请输入正确的用户名"));
       } else {
@@ -44,6 +46,7 @@ export default {
       }
     };
     const validatePass = (rule, value, callback) => {
+      console.log("enter validatePass");
       if (value.length < 5) {
         callback(new Error("密码不能小于5位"));
       } else {
@@ -56,6 +59,7 @@ export default {
         password: "admin"
       },
       loginRules: {
+        //这里的username与password来自于上方的prop属性。
         username: [
           { required: true, trigger: "blur", validator: validateUsername }
         ],
@@ -83,6 +87,7 @@ export default {
       }
     },
     handleLogin() {
+      console.log("enter handleLogin", this.$refs);
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
@@ -91,12 +96,23 @@ export default {
             .then(() => {
               this.loading = false;
               this.$router.push({ path: this.redirect || "/" });
+              console.log("this.$router:", this.$router);
             })
             .catch(() => {
               this.loading = false;
             });
         } else {
           console.log("error submit!!");
+          this.$message({
+            message: "不符合要求！！",
+            type: 'error',
+            duration: 5 * 1000
+          })
+          /*   Message({
+              message: "未通过form校验,请检查输入项格式等是否符合要求！！",
+              type: 'error',
+              duration: 5 * 1000
+            }); */
           return false;
         }
       });
